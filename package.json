@@ -1,7 +1,7 @@
 {
-  "name": "parrot-compiler",
-  "displayName": "parrot-compiler",
-  "description": "",
+  "name": "vscode-plugin-parrot",
+  "displayName": "vscode-plugin-parrot",
+  "description": "鹦鹉翻译vscode插件",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.77.0"
@@ -37,6 +37,7 @@
     "eslint": "^8.38.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
+    "prettier": "^2.8.7",
     "typescript": "^5.0.4"
   }
 }
