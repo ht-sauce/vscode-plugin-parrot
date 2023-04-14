@@ -1,14 +1,17 @@
 {
   "version": "1.0.0",
   "name": "parrot-compiler",
-  "description": "鹦鹉编辑器",
+  "description": "鹦鹉翻译插件",
+  "engines": {
+    "node": ">=16.17.0"
+  },
   "author": {
     "name": "戴海天",
     "url": "https://github.com/ht-sauce"
   },
   "repository": "https://github.com/ht-sauce/parrot-compiler",
   "scripts": {
-    "compiler-dev": "ts-node ./analytical-extraction/src/index.ts"
+    "compiler-dev": "ts-node ./compiler/index.ts"
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.2.47"
@@ -16,6 +19,7 @@
   "devDependencies": {
     "@babel/cli": "^7.21.0",
     "@babel/core": "^7.21.3",
+    "@babel/generator": "^7.21.4",
     "@babel/preset-env": "^7.20.2",
     "@types/node": "^18.15.5",
     "prettier": "^2.8.7",

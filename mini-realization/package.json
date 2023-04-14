@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "name": "mini-realization",
+  "description": "最小实现",
+  "type": "module",
+  "engines": {
+    "node": ">=16.17.0"
+  },
+  "author": {
+    "name": "戴海天",
+    "url": "https://github.com/ht-sauce"
+  },
+  "repository": "https://github.com/ht-sauce/parrot-compiler",
+  "scripts": {
+    "dev": "node ./vue.js",
+    "testBabel": "node ./babelTest.js"
+  }
+}

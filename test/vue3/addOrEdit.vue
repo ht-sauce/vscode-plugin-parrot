@@ -1,10 +1,22 @@
 <template>
+  测试一级结构
+  {{ '测试纯文字' }}
+  {{ dialogType === DialogTypeEnum.add ? '新增测试' : '编辑测试' }}
   <two-dialog
     width="1200px"
     v-model="show"
     @close="onClose"
     :title="dialogType === DialogTypeEnum.add ? '新增' : '编辑'"
   >
+    {{ '测试纯文字' }}
+    {{ dialogType === DialogTypeEnum.add ? '新增测试' : '编辑测试' }}
+    <span>测试</span>
+    <!--测试注释-->
+    <span>{{ $t('测试i18n编译') }}</span>
+    <span
+      :label="$t('测试熟悉下的翻译')"
+      :test="dialogType === DialogTypeEnum.add ? $t('测试表达式新增') : '编辑'"
+    ></span>
     <el-form ref="formRef" label-width="0" :model="formData" :rules="rules">
       <el-form-item
         label="填报类型"
@@ -264,6 +276,7 @@
       </two-table>
     </el-form>
     <template #footer>
+      测试插槽内容
       <div class="dialog-footer">
         <el-button @click="onCancel">取消</el-button>
         <el-button type="primary" @click="onConfirm">确定</el-button>
@@ -283,6 +296,11 @@ import { useGlobalStore } from '@/stores/global'
 import ReportServer from '@/services/ReportServer'
 import { zeroOrNumber } from '@/utils/validate'
 
+/*
+ * 多行注释测试
+ *
+ * */
+// 单行注释测试
 const spanColumsIndex = [0] // 需要合并的列
 const show = ref(false)
 const dialogType = ref<DialogTypeEnum>(DialogTypeEnum.add)
