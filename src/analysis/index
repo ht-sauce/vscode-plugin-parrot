@@ -1,0 +1,5 @@
+// import * as eslint from 'eslint'
+// import fs from 'fs'
+
+// 读取文件内容
+function readFile() {}

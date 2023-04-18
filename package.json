@@ -47,6 +47,7 @@
     }
   },
   "scripts": {
+    "test": "./src/analysis/index",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
@@ -62,9 +63,14 @@
     "@typescript-eslint/parser": "^5.58.0",
     "@vscode/test-electron": "^2.3.0",
     "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "prettier": "^2.8.7",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "eslint-plugin-vue": "^9.11.0"
   }
 }
