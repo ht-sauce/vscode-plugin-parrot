@@ -3,21 +3,48 @@
   "displayName": "vscode-plugin-parrot",
   "description": "鹦鹉翻译vscode插件",
   "version": "0.0.1",
+  "publisher": "ht-sauce",
   "engines": {
     "vscode": "^1.77.0"
   },
   "categories": [
     "Other"
   ],
+  "icon": "public/logo.png",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "vscode-plugin-parrot"
+    },
     "commands": [
       {
-        "command": "parrot-compiler.helloWorld",
-        "title": "Hello World"
+        "command": "ExtractChinese",
+        "title": "提取中文"
       }
-    ]
+    ],
+    "submenus": [
+      {
+        "id": "parrot.submenu",
+        "label": "鹦鹉翻译"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname =~ /\\.(ts|js|tsx|jsx|vue|html|json|yaml|yml)$/",
+          "submenu": "parrot.submenu",
+          "group": "navigation"
+        }
+      ],
+      "parrot.submenu": [
+        {
+          "command": "ExtractChinese",
+          "group": "1_modification@1"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
