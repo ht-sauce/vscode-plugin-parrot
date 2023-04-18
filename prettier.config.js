@@ -7,4 +7,4 @@ module.exports = {
   singleQuote: true, // 使用单引号
   trailingComma: 'all', // 不用在多行尾逗号
   endOfLine: 'auto',
-};
+}
