@@ -63,14 +63,13 @@
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
     "@vscode/test-electron": "^2.3.0",
-    "@vue/eslint-config-typescript": "^11.0.2",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.11.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "prettier": "^2.8.7",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vue-eslint-parser": "^9.1.1"
   }
 }

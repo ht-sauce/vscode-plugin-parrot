@@ -1,7 +1,5 @@
 import { ESLint } from 'eslint'
 import * as fs from 'fs/promises'
-// @ts-ignore
-import * as EslintPluginVue from 'eslint-plugin-vue'
 
 // 读取文件内容
 export async function readFile(url: string) {
@@ -10,20 +8,28 @@ export async function readFile(url: string) {
 }
 
 export async function analysis(url: string) {
-  // const fileStr = await readFile(url)
-  // EslintPluginVue.configs['vue3-recommended']
-
-  // @ts-ignore
   const eslint = new ESLint({
     overrideConfig: {
-      root: true,
+      // root: true,
       // 添加vue和ts解析功能
-      extends: ['plugin:vue/vue3-essential', '@vue/eslint-config-typescript'],
+      parser: 'vue-eslint-parser',
       parserOptions: {
         ecmaVersion: 'latest',
+        ecmaFeatures: {
+          jsx: true,
+        },
+        parser: {
+          js: 'espree',
+          jsx: 'espree',
+          ts: '@typescript-eslint/parser',
+          tsx: '@typescript-eslint/parser',
+          // '<template>': 'espree',
+        },
+        extraFileExtensions: ['.vue'],
       },
+      overrides: [],
       rules: {
-        '*': ['off'],
+        'prettier/prettier': 'off',
       },
     },
   })
