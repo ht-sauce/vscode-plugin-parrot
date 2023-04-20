@@ -295,7 +295,15 @@ import dayjs from 'dayjs'
 import { useGlobalStore } from '@/stores/global'
 import ReportServer from '@/services/ReportServer'
 import { zeroOrNumber } from '@/utils/validate'
+import { useI18n } from 'vue-i18n'
+import { loadLocaleMessages, i18n as i18n2 } from '@/i18n'
 
+const i18n = useI18n()
+const test1 = i18n.t('测试useI18n')
+
+const test2 = i18n2.global.t('测试js文件引入的i18n')
+
+const test3 = this.$t('测试$t方式')
 /*
  * 多行注释测试
  *
