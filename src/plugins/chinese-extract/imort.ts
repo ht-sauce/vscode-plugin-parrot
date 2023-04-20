@@ -31,7 +31,7 @@ export default {
         schema: [],
       },
       create(context: Rule.RuleContext): Rule.RuleListener {
-        console.log(11111, context)
+        console.log(2222, context.getSourceCode())
         return {
           // 在ReturnStatement节点上
           ReturnStatement(node) {},

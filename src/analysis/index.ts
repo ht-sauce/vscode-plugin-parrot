@@ -33,7 +33,6 @@ export async function analysis(url: string) {
 
   // 检查文件
   const results = await eslint.lintFiles([url])
-
   console.log(results)
   // 输出回原文件
   await ESLint.outputFixes(results)
