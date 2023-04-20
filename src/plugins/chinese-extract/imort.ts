@@ -87,9 +87,9 @@ export default {
           // Event handlers for <script> or scripts. (optional)
           // js，ts部分会走这里
           {
-            Program(node: AST.ESLintProgram): void {
-              // console.log(node)
-            },
+            // Program(node: AST.ESLintProgram): void {
+            //   // console.log(node)
+            // },
           },
           // Options. (optional)
           {
