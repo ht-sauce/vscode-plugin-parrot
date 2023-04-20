@@ -10,6 +10,7 @@ export async function readFile(url: string) {
 export async function analysis(url: string) {
   const eslint = new ESLint({
     fix: false, // 是否自动修复
+    // plugins: { '@parrot/eslint-plugin-chinese-extract': {} },
     overrideConfig: {
       // root: true,
       // 添加vue和ts解析功能
