@@ -1,4 +1,5 @@
 import { ESLint, Rule } from 'eslint'
+import { AST } from 'vue-eslint-parser'
 
 export const meta = {
   name: 'eslint-plugin-parrot',
@@ -31,20 +32,59 @@ export default {
         schema: [],
       },
       create(context: Rule.RuleContext): Rule.RuleListener {
-        console.log(2222, context.getSourceCode())
-        return {
-          // 在ReturnStatement节点上
-          ReturnStatement(node) {},
-          // 在开始分析代码路径时
-          onCodePathStart(codePath, node) {
-            // console.log(codePath, node)
+        // console.log(1111, context.parserServices)
+        // 原始ast方式
+        // return {
+        //   // 在ReturnStatement节点上
+        //   ReturnStatement(node) {},
+        //   // 在开始分析代码路径时
+        //   onCodePathStart(codePath, node) {
+        //     // console.log(codePath, node)
+        //   },
+        //   // 在分析代码路径结束时
+        //   onCodePathEnd(codePath, node) {},
+        //   // onCodePathSegmentStart(segment, node) {},
+        //   // onCodePathSegmentEnd(segment, node) {},
+        //   // onCodePathSegmentLoop(fromSegment, toSegment, node) {},
+        // }
+        // vue解析器提供的方式
+        return context.parserServices.defineTemplateBodyVisitor(
+          // <template>部分走这里
+          /* 存在的节点类型   VAttribute: ["key", "value"],
+            VDirectiveKey: ["name", "argument", "modifiers"],
+            VDocumentFragment: ["children"],
+            VElement: ["startTag", "children", "endTag"],
+            VEndTag: [],
+            VExpressionContainer: ["expression"],
+            VFilter: ["callee", "arguments"],
+            VFilterSequenceExpression: ["expression", "filters"],
+            VForExpression: ["left", "right"],
+            VIdentifier: [],
+            VLiteral: [],
+            VOnExpression: ["body"],
+            VSlotScopeExpression: ["params"],
+            VStartTag: ["attributes"],
+            VText: [],*/
+          {
+            // VElement(node: AST.VElement): void {
+            //   console.log(node)
+            // },
+            VText(node: AST.VText): void {
+              console.log(node)
+            },
           },
-          // 在分析代码路径结束时
-          onCodePathEnd(codePath, node) {},
-          // onCodePathSegmentStart(segment, node) {},
-          // onCodePathSegmentEnd(segment, node) {},
-          // onCodePathSegmentLoop(fromSegment, toSegment, node) {},
-        }
+          // Event handlers for <script> or scripts. (optional)
+          // js，ts部分会走这里
+          {
+            Program(node: AST.ESLintProgram): void {
+              console.log(node)
+            },
+          },
+          // Options. (optional)
+          {
+            templateBodyTriggerSelector: 'Program:exit',
+          },
+        )
       },
     },
   },

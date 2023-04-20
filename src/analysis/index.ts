@@ -21,9 +21,7 @@ export async function analysis(url: string) {
           jsx: 'espree',
           ts: '@typescript-eslint/parser',
           tsx: '@typescript-eslint/parser',
-          // '<template>': 'espree',
         },
-        // extraFileExtensions: ['.vue'],
       },
       rules: {
         'prettier/prettier': 'off',
@@ -33,7 +31,7 @@ export async function analysis(url: string) {
 
   // 检查文件
   const results = await eslint.lintFiles([url])
-  console.log(results)
+  // console.log(results)
   // 输出回原文件
-  await ESLint.outputFixes(results)
+  // await ESLint.outputFixes(results)
 }
