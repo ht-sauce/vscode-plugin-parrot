@@ -9,7 +9,7 @@ export type WordBarItem = {
 export const WordBar: WordBarItem[] = []
 // json结构的词条，最终丢出去的提取词条库
 export const WordBarJson: { [key: string]: string } = {}
-// 录入词条，统一处理
+// 录入词条，统一处理，必须是唯一的处理入口
 export function entryWordBar(content: string) {
   const item = wordProcessing(content)
   if (!item) return null

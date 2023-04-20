@@ -1,5 +1,8 @@
 import { ESLint, Rule } from 'eslint'
+import * as ESTree from 'estree'
 import { AST } from 'vue-eslint-parser'
+import { entryWordBar } from '../../store/term-bank'
+import { ASTType } from '../../tool/ast'
 
 export const meta = {
   name: 'eslint-plugin-parrot',
@@ -50,7 +53,7 @@ export default {
         // vue解析器提供的方式
         return context.parserServices.defineTemplateBodyVisitor(
           // <template>部分走这里
-          /* 存在的节点类型   VAttribute: ["key", "value"],
+          /* 存在的节点类型,ast原生类型未列出   VAttribute: ["key", "value"],
             VDirectiveKey: ["name", "argument", "modifiers"],
             VDocumentFragment: ["children"],
             VElement: ["startTag", "children", "endTag"],
@@ -66,18 +69,26 @@ export default {
             VStartTag: ["attributes"],
             VText: [],*/
           {
-            // VElement(node: AST.VElement): void {
-            //   console.log(node)
-            // },
+            Literal(node: Rule.Node): void {
+              const parent = node?.parent as ESTree.CallExpression
+              if (parent && parent.type === ASTType.CallExpression) {
+                if (parent.callee.type === ASTType.Identifier && parent.callee.name === '$t') return
+              }
+              entryWordBar((node as ESTree.Literal).value as string)
+            },
+            VLiteral(node: AST.VLiteral): void {
+              entryWordBar(node.value)
+            },
             VText(node: AST.VText): void {
-              console.log(node)
+              // console.log(node)
+              entryWordBar(node.value)
             },
           },
           // Event handlers for <script> or scripts. (optional)
           // js，ts部分会走这里
           {
             Program(node: AST.ESLintProgram): void {
-              console.log(node)
+              // console.log(node)
             },
           },
           // Options. (optional)
