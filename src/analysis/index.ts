@@ -1,18 +1,14 @@
 import { ESLint } from 'eslint'
-import * as fs from 'fs/promises'
-
-// 读取文件内容
-export async function readFile(url: string) {
-  const fileContent = (await fs.readFile(url)).toString()
-  return fileContent
-}
+import ChineseExtract, { meta } from '../plugins/chinese-extract/imort'
 
 export async function analysis(url: string) {
   const eslint = new ESLint({
-    fix: false, // 是否自动修复
-    // plugins: { '@parrot/eslint-plugin-chinese-extract': {} },
+    fix: true, // 是否自动修复
+    plugins: { [meta.name]: ChineseExtract }, // 加载自定义的插件
     overrideConfig: {
-      // root: true,
+      // 加载插件自定义的配置
+      // 原理：根据已经加载的插件去读取插件下面的配置信息
+      extends: ['plugin:parrot/extract'],
       // 添加vue和ts解析功能
       parser: 'vue-eslint-parser',
       parserOptions: {
@@ -27,7 +23,7 @@ export async function analysis(url: string) {
           tsx: '@typescript-eslint/parser',
           // '<template>': 'espree',
         },
-        extraFileExtensions: ['.vue'],
+        // extraFileExtensions: ['.vue'],
       },
       rules: {
         'prettier/prettier': 'off',
@@ -38,6 +34,7 @@ export async function analysis(url: string) {
   // 检查文件
   const results = await eslint.lintFiles([url])
 
+  console.log(results)
   // 输出回原文件
   await ESLint.outputFixes(results)
 }
