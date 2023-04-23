@@ -15,4 +15,6 @@ export enum ASTType {
   BinaryExpression = 'BinaryExpression',
   // 标识符。请注意，标识符可以是表达式或析构函数模式。
   Identifier = 'Identifier',
+  // 成员表达式。如果computed为true，则节点对应于computed（a[b]）成员表达式，属性为expression。如果computed为false，则节点对应于静态（a.b）成员表达式，属性为Identifier。
+  MemberExpression = 'MemberExpression',
 }

@@ -3,6 +3,8 @@ import * as ESTree from 'estree'
 import { AST } from 'vue-eslint-parser'
 import { entryWordBar } from '../../store/term-bank'
 import { ASTType } from '../../tool/ast'
+import { PrivateIdentifier } from 'estree'
+import { unmatchedIdentifier } from '../../tool/string'
 
 export const meta = {
   name: 'eslint-plugin-parrot',
@@ -72,7 +74,11 @@ export default {
             Literal(node: Rule.Node): void {
               const parent = node?.parent as ESTree.CallExpression
               if (parent && parent.type === ASTType.CallExpression) {
-                if (parent.callee.type === ASTType.Identifier && parent.callee.name === '$t') return
+                if (
+                  parent.callee.type === ASTType.Identifier &&
+                  unmatchedIdentifier(parent.callee.name)
+                )
+                  return
               }
               entryWordBar((node as ESTree.Literal).value as string)
             },
@@ -90,6 +96,18 @@ export default {
             // Program(node: AST.ESLintProgram): void {
             //   // console.log(node)
             // },
+            Literal(node: Rule.Node): void {
+              // console.log(node)
+              const parent = node?.parent as ESTree.CallExpression
+              if (parent && parent.type === ASTType.CallExpression) {
+                if (
+                  parent.callee.type === ASTType.MemberExpression &&
+                  unmatchedIdentifier((parent.callee.property as PrivateIdentifier).name)
+                )
+                  return
+              }
+              entryWordBar((node as ESTree.Literal).value as string)
+            },
           },
           // Options. (optional)
           {

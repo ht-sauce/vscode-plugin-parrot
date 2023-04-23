@@ -15,3 +15,8 @@ export function trimSpecial(string = '') {
   const pattern = /[`~!@#$^\-&*()=|{}':;',\\\[\]\.<>\/?~！@#￥……&*（）——|{}【】'；：""'。，、？\s]/g
   return string.replace(pattern, '')
 }
+
+// 匹配不可翻译的函数值
+export function unmatchedIdentifier(name: string) {
+  return ['t', 'log', '$t'].includes(name)
+}

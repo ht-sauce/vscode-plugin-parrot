@@ -25,6 +25,7 @@ export function entryWordBar(content: string) {
       text,
     })
     WordBarJson[incrementalKey] = text
+    return true
   } else {
     // 全新的词条
     WordBar.push({
@@ -32,6 +33,7 @@ export function entryWordBar(content: string) {
       text,
     })
     WordBarJson[key] = text
+    return true // 表示可以提取的全新词条
   }
 }
 // 获取处理过后的词条

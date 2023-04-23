@@ -17,9 +17,16 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+        test: '中文1',
+        rules: {
+            test: {message: this.$t('中文2')}
+        },
+    }
   },
-  created() {},
+  created() {
+      const str = '中文3'
+  },
   methods: {
     // 关闭当前页
     closeTab() {
