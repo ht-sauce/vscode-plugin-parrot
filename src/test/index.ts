@@ -1,7 +1,7 @@
 import { analysis } from '../analysis'
 import { join, resolve } from 'path'
 import { depositEntry } from '../store/out-file'
-import { rootPath } from '../tool/file'
+import { readFile, rootPath } from '../tool/file'
 
 // 测试中文提取
 async function runAnalysisTest() {
@@ -16,4 +16,10 @@ async function runAnalysisTest() {
     console.log(e)
   }
 }
-runAnalysisTest()
+// runAnalysisTest()
+
+async function testFile() {
+  const res = await readFile('d:/G/zl-project/nbs-pc/src/views/supplierSys/account/AddSupplier.vue')
+  console.log(res)
+}
+testFile()

@@ -16,7 +16,8 @@ export function activate(context: vscode.ExtensionContext) {
   //commandId参数必须与package.json中的命令字段匹配
   const disposable = vscode.commands.registerCommand(CommandsEnum.ExtractChinese, (uri) => {
     //每次执行命令时，都会执行您在此处放置的代码
-    analysis(uri)
+    // console.log(111, uri)
+    if (uri.path) analysis(uri.path.substring(1, uri.path.length))
   })
 
   context.subscriptions.push(disposable)
