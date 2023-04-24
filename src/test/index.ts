@@ -11,15 +11,16 @@ async function runAnalysisTest() {
     await analysis(urlStr)
 
     // 提取的词条输出
-    depositEntry()
+    await depositEntry()
   } catch (e) {
     console.log(e)
   }
 }
-// runAnalysisTest()
+runAnalysisTest()
 
 async function testFile() {
   const res = await readFile('d:/G/zl-project/nbs-pc/src/views/supplierSys/account/AddSupplier.vue')
   console.log(res)
 }
-testFile()
+// testFile()
+// depositEntry()
