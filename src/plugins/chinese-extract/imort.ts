@@ -1,7 +1,7 @@
 import { ESLint, Rule } from 'eslint'
 import * as ESTree from 'estree'
 import { PrivateIdentifier } from 'estree'
-import { AST } from 'vue-eslint-parser'
+import type { AST } from 'vue-eslint-parser'
 import { entryWordBar } from '../../store/term-bank'
 import { ASTType } from '../../tool/ast'
 import { unmatchedIdentifier } from '../../tool/string'
