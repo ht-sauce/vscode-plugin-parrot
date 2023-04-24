@@ -17,4 +17,14 @@ export enum ASTType {
   Identifier = 'Identifier',
   // 成员表达式。如果computed为true，则节点对应于computed（a[b]）成员表达式，属性为expression。如果computed为false，则节点对应于静态（a.b）成员表达式，属性为Identifier。
   MemberExpression = 'MemberExpression',
+  // 模板字符串节点
+  TemplateElement = 'TemplateElement',
+  // 一个字符串
+  Literal = 'Literal',
+  // vue字符串
+  VLiteral = 'VLiteral',
+  // vue html中的字符串
+  VText = 'VText',
+  // vue html属性
+  VAttribute = 'VAttribute',
 }

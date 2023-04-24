@@ -1,7 +1,3 @@
-// 统一前缀
-export function prefix(commands: string) {
-  return 'parrot.dht.' + commands
-}
 // 错误提示级别
 export enum MessageType {
   info = '提示',

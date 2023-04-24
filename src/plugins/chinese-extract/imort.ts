@@ -58,7 +58,8 @@ export default {
         // vue解析器提供的方式
         return context.parserServices.defineTemplateBodyVisitor(
           // <template>部分走这里
-          /* 存在的节点类型,ast原生类型未列出   VAttribute: ["key", "value"],
+          /* 存在的节点类型,ast原生类型未列出
+            VAttribute: ["key", "value"],
             VDirectiveKey: ["name", "argument", "modifiers"],
             VDocumentFragment: ["children"],
             VElement: ["startTag", "children", "endTag"],
@@ -75,7 +76,14 @@ export default {
             VText: [],*/
           {
             TemplateElement(node: ESTree.TemplateElement) {
-              entryWordBar(node.value.raw)
+              const entryStatus = entryWordBar(node.value.raw)
+              replaceText({
+                node,
+                entryStatus,
+                context,
+                replaceType: ReplaceType.vueTemplate,
+                isTemplate: true,
+              })
             },
             Literal(node: Rule.Node): void {
               const parent = node?.parent as ESTree.CallExpression
@@ -86,8 +94,14 @@ export default {
                 )
                   return
               }
-              const result = entryWordBar((node as ESTree.Literal).value as string)
-              replaceText(node, result, context, ReplaceType.vueTemplate)
+              const entryStatus = entryWordBar((node as ESTree.Literal).value as string)
+              replaceText({
+                node,
+                entryStatus,
+                context,
+                replaceType: ReplaceType.vueTemplate,
+                isTemplate: true,
+              })
             },
             VLiteral(node: AST.VLiteral): void {
               entryWordBar(node.value)
@@ -113,11 +127,18 @@ export default {
                 )
                   return
               }
-              const result = entryWordBar((node as ESTree.Literal).value as string)
-              replaceText(node, result, context, ReplaceType.js)
+              const entryStatus = entryWordBar((node as ESTree.Literal).value as string)
+              replaceText({ node, entryStatus, context, replaceType: ReplaceType.js })
             },
             TemplateElement(node: ESTree.TemplateElement) {
-              entryWordBar(node.value.raw)
+              const entryStatus = entryWordBar(node.value.raw)
+              replaceText({
+                node,
+                entryStatus,
+                context,
+                replaceType: ReplaceType.js,
+                isTemplate: true,
+              })
             },
           },
           // Options. (optional)

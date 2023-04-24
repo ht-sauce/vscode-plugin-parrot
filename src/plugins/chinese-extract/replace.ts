@@ -1,26 +1,31 @@
 import { EntryStatus, FileType, InsertState, ReplaceType } from '../../store/types'
 import { Rule } from 'eslint'
+import { ReplaceTextParams } from './types'
+import { ASTType } from '../../tool/ast'
 
 // 替换文本为指定内容
 export function replaceText(
-  node: Rule.Node | any,
-  entryStatus: EntryStatus,
-  content: Rule.RuleContext,
-  replaceType: ReplaceType,
+  { node, entryStatus, context, replaceType, isTemplate } = {
+    isTemplate: false,
+  } as ReplaceTextParams,
 ) {
   const { state, key } = entryStatus
   if (state === InsertState.empty) return false
+  const { type } = node
 
   const TemplateCode = i18nTemplateCode(replaceType, key)
 
-  content.report({
-    node,
-    message: '替换为:' + TemplateCode,
-    fix(fixer: Rule.RuleFixer) {
+  // 修复函数
+  let fixFun = (fixer: Rule.RuleFixer): Rule.Fix | null => {
+    return null
+  }
+  if (type === ASTType.Literal) {
+    fixFun = (fixer: Rule.RuleFixer) => {
       const [start, end] = node.range
       return fixer.replaceTextRange([start, end], TemplateCode)
-    },
-  })
+    }
+  }
+  context.report({ node, message: '替换为:' + TemplateCode, fix: fixFun })
 }
 // i18n模板代码
 export function i18nTemplateCode(replaceType: ReplaceType, key: string) {
