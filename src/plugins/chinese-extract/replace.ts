@@ -16,7 +16,9 @@ export function replaceText(
   const TemplateCode = i18nTemplateCode(replaceType, key)
 
   // 修复函数
-  let fixFun = (fixer: Rule.RuleFixer): Rule.Fix | null => {
+  let fixFun = (
+    fixer: Rule.RuleFixer,
+  ): null | Rule.Fix | IterableIterator<Rule.Fix> | Rule.Fix[] => {
     return null
   }
   if (type === ASTType.Literal) {
@@ -31,8 +33,22 @@ export function replaceText(
       const { value } = node
       const { raw } = value
       // 需要减去的长度,需要动态变化
-      const reduceLen = end - start - 1 - raw.length
+      let reduceLen = end - start - 1 - raw.length
+      reduceLen = reduceLen === 2 ? 2 : 1 // 存在字符差异，进行抹平
       return fixer.replaceTextRange([start + 1, end - reduceLen], '${' + TemplateCode + '}')
+    }
+  }
+  if (type === ASTType.VText) {
+    fixFun = (fixer: Rule.RuleFixer) => {
+      const [start, end] = node.range
+      return fixer.replaceTextRange([start, end], '{{' + TemplateCode + '}}')
+    }
+  }
+  if (type === ASTType.VAttribute) {
+    fixFun = (fixer: Rule.RuleFixer) => {
+      const { key } = node
+      // const [start, end] = node.range
+      return fixer.replaceText(node, ':' + key.name + '=' + '"' + TemplateCode + '"')
     }
   }
   context.report({ node, message: '替换为:' + TemplateCode, fix: fixFun })

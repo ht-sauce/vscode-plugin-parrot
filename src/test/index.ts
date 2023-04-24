@@ -6,7 +6,7 @@ import { rootPath } from '../tool/file'
 // 测试中文提取
 async function runAnalysisTest() {
   try {
-    const urlStr = join(rootPath() + '/test-file/addOrEdit.vue')
+    const urlStr = join(rootPath() + '/test-file/HeaderInfo.vue')
     // console.log(urlStr)
     await analysis(urlStr)
 

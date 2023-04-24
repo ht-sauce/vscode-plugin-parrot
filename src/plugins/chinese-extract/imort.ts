@@ -6,7 +6,7 @@ import { entryWordBar } from '../../store/term-bank'
 import { ASTType } from '../../tool/ast'
 import { unmatchedIdentifier } from '../../tool/string'
 import { replaceText } from './replace'
-import { ReplaceType } from '../../store/types'
+import { FileType, ReplaceType } from '../../store/types'
 import { globalStatus } from '../../store/global-status'
 
 export const meta = {
@@ -102,18 +102,36 @@ export default {
               })
             },
             VLiteral(node: AST.VLiteral): void {
-              entryWordBar(node.value)
+              const entryStatus = entryWordBar(node.value)
+              // 父级节点需要改为冒号方式，传递父节点
+              replaceText({
+                node: node.parent,
+                entryStatus,
+                context,
+                replaceType: ReplaceType.vueTemplate,
+              })
             },
             VText(node: AST.VText): void {
               // console.log(node)
-              entryWordBar(node.value)
+              const entryStatus = entryWordBar(node.value)
+              replaceText({
+                node,
+                entryStatus,
+                context,
+                replaceType: ReplaceType.vueTemplate,
+              })
             },
           },
           // Event handlers for <script> or scripts. (optional)
           // js，ts部分会走这里
           {
+            // // 在开始分析代码路径时
+            // onCodePathStart(codePath: string, node: any) {
+            //   console.log(codePath, node)
+            // },
+            // // 最大的节点，最先出现的部分
             // Program(node: AST.ESLintProgram): void {
-            //   // console.log(node)
+            //   console.log(node)
             // },
             Literal(node: Rule.Node): void {
               // console.log(node)
@@ -126,7 +144,12 @@ export default {
                   return
               }
               const entryStatus = entryWordBar((node as ESTree.Literal).value as string)
-              replaceText({ node, entryStatus, context, replaceType: ReplaceType.js })
+              const { fileType } = globalStatus
+              // 默认为js文件处理方式
+              let replaceType = ReplaceType.js
+              // 不同文件下的判断处理
+              if (fileType === FileType.vue) replaceType = ReplaceType.vueOptions
+              replaceText({ node, entryStatus, context, replaceType })
             },
             TemplateElement(node: ESTree.TemplateElement) {
               const entryStatus = entryWordBar(node.value.raw)
