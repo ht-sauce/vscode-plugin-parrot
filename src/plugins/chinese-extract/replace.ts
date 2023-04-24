@@ -25,6 +25,16 @@ export function replaceText(
       return fixer.replaceTextRange([start, end], TemplateCode)
     }
   }
+  if (type === ASTType.TemplateElement) {
+    fixFun = (fixer: Rule.RuleFixer) => {
+      const [start, end] = node.range
+      const { value } = node
+      const { raw } = value
+      // 需要减去的长度,需要动态变化
+      const reduceLen = end - start - 1 - raw.length
+      return fixer.replaceTextRange([start + 1, end - reduceLen], '${' + TemplateCode + '}')
+    }
+  }
   context.report({ node, message: '替换为:' + TemplateCode, fix: fixFun })
 }
 // i18n模板代码

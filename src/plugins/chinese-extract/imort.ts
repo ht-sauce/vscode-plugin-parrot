@@ -82,7 +82,6 @@ export default {
                 entryStatus,
                 context,
                 replaceType: ReplaceType.vueTemplate,
-                isTemplate: true,
               })
             },
             Literal(node: Rule.Node): void {
@@ -100,7 +99,6 @@ export default {
                 entryStatus,
                 context,
                 replaceType: ReplaceType.vueTemplate,
-                isTemplate: true,
               })
             },
             VLiteral(node: AST.VLiteral): void {
@@ -137,7 +135,6 @@ export default {
                 entryStatus,
                 context,
                 replaceType: ReplaceType.js,
-                isTemplate: true,
               })
             },
           },

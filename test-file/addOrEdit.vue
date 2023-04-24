@@ -1,6 +1,8 @@
 <template>
   测试一级结构
-  {{ '测试纯文字' }}
+  {{ `测试纯${111}文字` }}
+  {{ `测试纯文字` }}
+  {{ `测试${111}纯文${111}字` }}
   {{ dialogType === DialogTypeEnum.add ? '新增测试' : '编辑测试' }}
   <two-dialog
     width="1200px"
