@@ -52,7 +52,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/index.js"
+    "test": "node ./out/test/index.js",
+    "test-plugin": "node ./out/test/runTest.js"
   },
   "devDependencies": {
     "@types/eslint": "^8.37.0",
