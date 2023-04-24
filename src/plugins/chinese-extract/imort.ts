@@ -1,10 +1,13 @@
 import { ESLint, Rule } from 'eslint'
 import * as ESTree from 'estree'
+import { PrivateIdentifier } from 'estree'
 import { AST } from 'vue-eslint-parser'
 import { entryWordBar } from '../../store/term-bank'
 import { ASTType } from '../../tool/ast'
-import { PrivateIdentifier } from 'estree'
 import { unmatchedIdentifier } from '../../tool/string'
+import { replaceText } from './replace'
+import { ReplaceType } from '../../store/types'
+import { globalStatus } from '../../store/global-status'
 
 export const meta = {
   name: 'eslint-plugin-parrot',
@@ -71,6 +74,9 @@ export default {
             VStartTag: ["attributes"],
             VText: [],*/
           {
+            TemplateElement(node: ESTree.TemplateElement) {
+              entryWordBar(node.value.raw)
+            },
             Literal(node: Rule.Node): void {
               const parent = node?.parent as ESTree.CallExpression
               if (parent && parent.type === ASTType.CallExpression) {
@@ -80,7 +86,8 @@ export default {
                 )
                   return
               }
-              entryWordBar((node as ESTree.Literal).value as string)
+              const result = entryWordBar((node as ESTree.Literal).value as string)
+              replaceText(node, result, context, ReplaceType.vueTemplate)
             },
             VLiteral(node: AST.VLiteral): void {
               entryWordBar(node.value)
@@ -106,7 +113,11 @@ export default {
                 )
                   return
               }
-              entryWordBar((node as ESTree.Literal).value as string)
+              const result = entryWordBar((node as ESTree.Literal).value as string)
+              replaceText(node, result, context, ReplaceType.js)
+            },
+            TemplateElement(node: ESTree.TemplateElement) {
+              entryWordBar(node.value.raw)
             },
           },
           // Options. (optional)

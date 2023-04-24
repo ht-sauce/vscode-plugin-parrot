@@ -1,7 +1,14 @@
 import { ESLint } from 'eslint'
 import ChineseExtract, { meta } from '../plugins/chinese-extract/imort'
+import { setFileType } from '../store/global-status'
+import { FileType } from '../store/types'
 
 export async function analysis(url: string) {
+  if (!url) return false
+  // 获取文件后缀名
+  const fileSuffixName = url.split('.').reverse()[0]
+  setFileType(fileSuffixName as FileType)
+
   const eslint = new ESLint({
     fix: true, // 是否自动修复
     plugins: { [meta.name]: ChineseExtract }, // 加载自定义的插件
@@ -33,5 +40,5 @@ export async function analysis(url: string) {
   const results = await eslint.lintFiles([url])
   // console.log(results)
   // 输出回原文件
-  // await ESLint.outputFixes(results)
+  await ESLint.outputFixes(results)
 }

@@ -1,4 +1,5 @@
 import { isChina, trimSpecial } from '../tool/string'
+import { EntryStatus, InsertState } from './types'
 
 export type WordBarItem = {
   key: string
@@ -10,13 +11,18 @@ export const WordBar: WordBarItem[] = []
 // json结构的词条，最终丢出去的提取词条库
 export const WordBarJson: { [key: string]: string } = {}
 // 录入词条，统一处理，必须是唯一的处理入口
-export function entryWordBar(content: string) {
+export function entryWordBar(content: string): EntryStatus {
   const item = wordProcessing(content)
-  if (!item) return null
+  if (!item) return { key: '', state: InsertState.empty }
   const { key, text } = item
-  // 如果存在内容一样则不记录词条
-  if (WordBar.find((li) => li.text === text)) return false
-  // 如果存在内容一样但是词条key不一样的数据
+  // 排除内容一样
+  if (WordBar.find((li) => li.text === text)) {
+    return {
+      state: InsertState.error,
+      key,
+    }
+  }
+  // 内容不一样，但是key一样
   const equallyKey = WordBarJson[key]
   if (equallyKey) {
     const incrementalKey = key + (WordBar.length + 1).toString()
@@ -25,7 +31,10 @@ export function entryWordBar(content: string) {
       text,
     })
     WordBarJson[incrementalKey] = text
-    return true
+    return {
+      state: InsertState.success,
+      key,
+    }
   } else {
     // 全新的词条
     WordBar.push({
@@ -33,7 +42,11 @@ export function entryWordBar(content: string) {
       text,
     })
     WordBarJson[key] = text
-    return true // 表示可以提取的全新词条
+    // 表示可以提取的全新词条
+    return {
+      state: InsertState.success,
+      key,
+    }
   }
 }
 // 获取处理过后的词条
