@@ -25,3 +25,5 @@ out
 dist
 .vscode-test/
 *.vsix
+
+vscode-plugin-parrot*
