@@ -2,8 +2,12 @@
 	"name": "vscode-plugin-parrot",
 	"displayName": "vscode-plugin-parrot",
 	"description": "鹦鹉翻译vscode插件",
-	"version": "0.0.4",
+	"version": "0.0.9",
 	"publisher": "ht-sauce",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ht-sauce/vscode-plugin-parrot"
+	},
 	"engines": {
 		"vscode": "^1.77.0"
 	},

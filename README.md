@@ -10,6 +10,6 @@ npm run build
 ### 自定义配置表
 暂未开放
 ### 提取中文
-![提取中文.png](/docs/images/提取中文.png)
-将会把vue,js,ts文件提取中文代码改为$t()方式  
-生成parrot-extract-out文件夹，翻译提取内容在该文件夹中
+![提取中文.png](https://raw.githubusercontent.com/ht-sauce/vscode-plugin-parrot/main/docs/images/%E6%8F%90%E5%8F%96%E4%B8%AD%E6%96%87.png)  
+将会把vue,js,ts文件提取中文代码改为$t()方式   
+生成parrot-extract-out文件夹，翻译提取内容在该文件夹中  
