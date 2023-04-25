@@ -2,7 +2,6 @@ import { analysis } from '../analysis'
 import { join, resolve } from 'path'
 import { depositEntry } from '../store/out-file'
 import { readFile, rootPath } from '../tool/file'
-
 // 测试中文提取
 async function runAnalysisTest() {
   try {

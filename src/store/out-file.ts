@@ -1,6 +1,7 @@
 import { getWordBar } from './term-bank'
 import { createFile, rootPath, writeFile } from '../tool/file'
 import { getConfig } from '../config'
+import { globalStatus } from './global-status'
 
 // 将词条存入到文件当中
 export async function depositEntry() {
@@ -13,7 +14,7 @@ export async function depositEntry() {
   // console.log(res)
   await writeFile(
     rootPath() + '/dist/',
-    time.toString() + '.json',
+    globalStatus.currentFileName + '.json',
     JSON.stringify(getWordBar().WordBarJson, null, '\t'),
   )
   console.log('提取成功')
