@@ -2,6 +2,9 @@ import * as fs from 'fs/promises'
 import { FileContent } from '../types/file'
 import { resolve } from 'path'
 import { access, mkdir } from 'fs/promises'
+import * as vscode from 'vscode'
+import { setCurrentFileName, setFileType } from '../store/global-status'
+import { FileType } from '../store/types'
 // 读取文件内容
 export async function readFile(url: string) {
   const fileBuffer = await fs.readFile(url)
@@ -21,6 +24,12 @@ export async function writeFile(writeUrl: string, fileName: string, fileContent:
 export function rootPath() {
   return resolve('.')
 }
+// 获取vscode项目路径
+export function getVsCodeProjectPath() {
+  const workName = vscode.workspace.name
+  const workspaceFolders = vscode.workspace.workspaceFolders ?? []
+  return workspaceFolders.find((li) => li.name === workName)?.uri.fsPath
+}
 
 // 检测并创建目录
 export async function createFile(path: string) {
@@ -31,4 +40,13 @@ export async function createFile(path: string) {
     await mkdir(path)
     return Promise.resolve(true)
   }
+}
+
+// 处理文件得到文件地址
+export function handlerFileUrl(url: string) {
+  // 获取文件后缀名
+  const fileSuffixName = url.split('.').reverse()[0]
+  const fileName = url.split('\\').reverse()[0]
+  setFileType(fileSuffixName as FileType) // 获取文件后缀
+  setCurrentFileName(fileName) // 文件名称
 }

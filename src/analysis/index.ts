@@ -1,20 +1,12 @@
 import { ESLint } from 'eslint'
 import ChineseExtract, { meta } from '../plugins/chinese-extract/imort'
-import { setCurrentFileName, setFileType } from '../store/global-status'
-import { FileType } from '../store/types'
-import { resolve } from 'path'
 const tsParser = require('@typescript-eslint/parser')
 const espree = require('espree')
-const vueParser = require('vue-eslint-parser')
-export async function analysis(url: string) {
-  if (!url) return false
-  // 获取文件后缀名
-  const fileSuffixName = url.split('.').reverse()[0]
-  const fileName = url.split('\\').reverse()[0]
-  setFileType(fileSuffixName as FileType)
-  setCurrentFileName(fileName)
+const vueParser = require.resolve('vue-eslint-parser')
 
-  const vueParser = resolve('node_modules/vue-eslint-parser/index.js')
+// eslint配置提取
+export async function analysis(url: string) {
+  // console.log(vueParser)
   const eslint = new ESLint({
     fix: true, // 是否自动修复
     plugins: { [meta.name]: ChineseExtract }, // 加载自定义的插件
