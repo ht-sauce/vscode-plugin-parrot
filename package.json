@@ -1,79 +1,80 @@
 {
-  "name": "vscode-plugin-parrot",
-  "displayName": "vscode-plugin-parrot",
-  "description": "鹦鹉翻译vscode插件",
-  "version": "0.0.1",
-  "publisher": "ht-sauce",
-  "engines": {
-    "vscode": "^1.77.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "icon": "public/logo.png",
-  "activationEvents": [],
-  "main": "./out/extension.js",
-  "contributes": {
-    "configuration": {
-      "type": "object",
-      "title": "vscode-plugin-parrot"
-    },
-    "commands": [
-      {
-        "command": "ExtractChinese",
-        "title": "提取中文"
-      }
-    ],
-    "submenus": [
-      {
-        "id": "parrot.submenu",
-        "label": "鹦鹉翻译"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "when": "resourceExtname =~ /\\.(ts|js|tsx|jsx|vue|html|json|yaml|yml)$/",
-          "submenu": "parrot.submenu",
-          "group": "navigation"
-        }
-      ],
-      "parrot.submenu": [
-        {
-          "command": "ExtractChinese",
-          "group": "1_modification@1"
-        }
-      ]
-    }
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/index.js",
-    "test-plugin": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/eslint": "^8.37.0",
-    "@types/eslint-scope": "^3.7.4",
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^16.18.23",
-    "@types/vscode": "^1.77.0",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@vscode/test-electron": "^2.3.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "prettier": "^2.8.7",
-    "typescript": "^5.0.4"
-  },
-  "dependencies": {
-    "eslint": "^8.39.0",
-    "vue-eslint-parser": "^9.1.1",
-    "@typescript-eslint/parser": "^5.58.0"
-  }
+	"name": "vscode-plugin-parrot",
+	"displayName": "vscode-plugin-parrot",
+	"description": "鹦鹉翻译vscode插件",
+	"version": "0.0.2",
+	"publisher": "ht-sauce",
+	"engines": {
+		"vscode": "^1.77.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"icon": "public/logo.png",
+	"activationEvents": [],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "vscode-plugin-parrot"
+		},
+		"commands": [
+			{
+				"command": "ExtractChinese",
+				"title": "提取中文"
+			}
+		],
+		"submenus": [
+			{
+				"id": "parrot.submenu",
+				"label": "鹦鹉翻译"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "resourceExtname =~ /\\.(ts|js|tsx|jsx|vue|html|json|yaml|yml)$/",
+					"submenu": "parrot.submenu",
+					"group": "navigation"
+				}
+			],
+			"parrot.submenu": [
+				{
+					"command": "ExtractChinese",
+					"group": "1_modification@1"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/index.js",
+		"test-plugin": "node ./out/test/runTest.js",
+		"build": "node ./build/index.mjs && vsce package"
+	},
+	"devDependencies": {
+		"@types/eslint": "^8.37.0",
+		"@types/eslint-scope": "^3.7.4",
+		"@types/glob": "^8.1.0",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "^16.18.23",
+		"@types/vscode": "^1.77.0",
+		"@typescript-eslint/eslint-plugin": "^5.58.0",
+		"@vscode/test-electron": "^2.3.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"glob": "^8.1.0",
+		"mocha": "^10.2.0",
+		"prettier": "^2.8.7",
+		"typescript": "^5.0.4"
+	},
+	"dependencies": {
+		"eslint": "^8.39.0",
+		"vue-eslint-parser": "^9.1.1",
+		"@typescript-eslint/parser": "^5.58.0"
+	}
 }
