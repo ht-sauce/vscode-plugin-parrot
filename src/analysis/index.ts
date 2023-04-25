@@ -2,7 +2,9 @@ import { ESLint } from 'eslint'
 import ChineseExtract, { meta } from '../plugins/chinese-extract/imort'
 import { setFileType } from '../store/global-status'
 import { FileType } from '../store/types'
-
+const tsParser = require('@typescript-eslint/parser')
+const espree = require('espree')
+const vueParser = require('vue-eslint-parser')
 export async function analysis(url: string) {
   if (!url) return false
   // 获取文件后缀名
@@ -24,10 +26,10 @@ export async function analysis(url: string) {
           jsx: true,
         },
         parser: {
-          js: 'espree',
-          jsx: 'espree',
-          ts: '@typescript-eslint/parser',
-          tsx: '@typescript-eslint/parser',
+          js: espree,
+          jsx: espree,
+          ts: tsParser,
+          tsx: tsParser,
         },
       },
       rules: {

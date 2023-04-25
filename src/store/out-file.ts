@@ -16,4 +16,5 @@ export async function depositEntry() {
     time.toString() + '.json',
     JSON.stringify(getWordBar().WordBarJson, null, '\t'),
   )
+  console.log('提取成功')
 }
