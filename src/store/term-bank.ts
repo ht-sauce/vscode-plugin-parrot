@@ -1,5 +1,6 @@
 import { isChina, trimSpecial } from '../tool/string'
 import { EntryStatus, InsertState } from './types'
+import { mergeEntryPath } from './out-file'
 
 export type WordBarItem = {
   key: string
@@ -7,9 +8,9 @@ export type WordBarItem = {
 }
 /*两个词条库数据保持一致，用于不同的校验处理*/
 // 单词条目
-export const WordBar: WordBarItem[] = []
+export let WordBar: WordBarItem[] = []
 // json结构的词条，最终丢出去的提取词条库
-export const WordBarJson: { [key: string]: string } = {}
+export let WordBarJson: { [key: string]: string } = {}
 // 录入词条，统一处理，必须是唯一的处理入口
 export function entryWordBar(content: string): EntryStatus {
   const item = wordProcessing(content)
@@ -69,4 +70,15 @@ export function wordProcessing(str = '') {
     key: keyStr.substring(0, 100), // 前100位作为词条key
     text: str.trim(), // 原始内容需要保留
   } as WordBarItem
+}
+
+// 合并词条库，针对需要将所有提取翻译内容输出到一个文件中的场景
+export function mergeWordBar(datas: { [key: string]: string }) {
+  if (!datas) return null
+  WordBarJson = datas
+  for (const key in datas) {
+    const text = datas[key]
+    WordBarJson[key] = text
+    WordBar.push({ key, text })
+  }
 }

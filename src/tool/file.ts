@@ -25,10 +25,10 @@ export function rootPath() {
   return resolve('.')
 }
 // 获取vscode项目路径
-export function getVsCodeProjectPath() {
+export function getVsCodeProjectPath(): string {
   const workName = vscode.workspace.name
   const workspaceFolders = vscode.workspace.workspaceFolders ?? []
-  return workspaceFolders.find((li) => li.name === workName)?.uri.fsPath
+  return workspaceFolders.find((li) => li.name === workName)?.uri.fsPath as string
 }
 
 // 检测并创建目录
@@ -49,4 +49,14 @@ export function handlerFileUrl(url: string) {
   const fileName = url.split('\\').reverse()[0]
   setFileType(fileSuffixName as FileType) // 获取文件后缀
   setCurrentFileName(fileName) // 文件名称
+}
+
+export async function isAccess(url: string, mode?: number) {
+  try {
+    if (mode) await access(url, mode)
+    else await access(url)
+    return true
+  } catch (e) {
+    return false
+  }
 }
