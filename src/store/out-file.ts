@@ -44,7 +44,7 @@ export async function depositEntry() {
   if (config.fileOutMode === 'unified') {
     const { fileOut } = mergeEntryPath()
     // 检测并创建目录
-    await createFile(fileOut)
+    if (!config.i18nLang) await createFile(fileOut)
     await writeFile(
       fileOut,
       config.unifiedFileName + '.json',

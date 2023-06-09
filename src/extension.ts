@@ -27,20 +27,20 @@ export function activate(context: vscode.ExtensionContext) {
       // 配置文件读取处理
       await getSetConfigFile()
 
-      // const path = uri.fsPath
-      // if (!path) {
-      //   message({ msg: '没有文件路径,无法进行提取', type: MessageType.error })
-      //   return false
-      // }
-      // // 文件地址预处理
-      // handlerFileUrl(path)
-      // // 统一模式下的处理，预先判断是否已有词条库进行合并,内部已经判断模式执行
-      // await unifiedFileMergeData()
-      // // 进行文件处理
-      // await analysis(path)
-      // // 提取的词条输出
-      // await depositEntry()
-      // message({ msg: `提取${globalStatus.currentFileName}成功`, type: MessageType.success })
+      const path = uri.fsPath
+      if (!path) {
+        message({ msg: '没有文件路径,无法进行提取', type: MessageType.error })
+        return false
+      }
+      // 文件地址预处理
+      handlerFileUrl(path)
+      // 统一模式下的处理，预先判断是否已有词条库进行合并,内部已经判断模式执行
+      await unifiedFileMergeData()
+      // 进行文件处理
+      await analysis(path)
+      // 提取的词条输出
+      await depositEntry()
+      message({ msg: `提取${globalStatus.currentFileName}成功`, type: MessageType.success })
     } catch (e: any) {
       message({ msg: e, type: MessageType.error })
     }
