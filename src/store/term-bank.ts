@@ -1,6 +1,5 @@
 import { isChina, trimSpecial } from '../tool/string'
 import { EntryStatus, InsertState } from './types'
-import { mergeEntryPath } from './out-file'
 
 export type WordBarItem = {
   key: string
@@ -75,10 +74,17 @@ export function wordProcessing(str = '') {
 // 合并词条库，针对需要将所有提取翻译内容输出到一个文件中的场景
 export function mergeWordBar(datas: { [key: string]: string }) {
   if (!datas) return null
+  initData()
   WordBarJson = datas
   for (const key in datas) {
     const text = datas[key]
     WordBarJson[key] = text
     WordBar.push({ key, text })
   }
+}
+
+// 初始化数据
+export function initData() {
+  WordBar = []
+  WordBarJson = {}
 }

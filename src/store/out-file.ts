@@ -3,7 +3,6 @@ import { createFile, getVsCodeProjectPath, isAccess, writeFile } from '../tool/f
 import { getConfig } from '../config'
 import { globalStatus } from './global-status'
 import { join } from 'path'
-import { access } from 'fs/promises'
 
 // 针对词条库合并路径处理
 export function mergeEntryPath() {
@@ -61,6 +60,7 @@ export async function unifiedFileMergeData() {
   const isFile = await isAccess(importDataUrl)
   if (isFile) {
     // 如果存在数据文件则需要进行合并词条库
+    delete require.cache[importDataUrl]
     const data = require(importDataUrl)
     mergeWordBar(data)
   }
