@@ -51,6 +51,18 @@ export function replaceText(
       return fixer.replaceText(node, ':' + key.name + '=' + '"' + TemplateCode + '"')
     }
   }
+  if (type === ASTType.JSXText) {
+    fixFun = (fixer: Rule.RuleFixer) => {
+      const [start, end] = node.range
+      return fixer.replaceTextRange([start, end], '{' + TemplateCode + '}')
+    }
+  }
+  if (type === ASTType.JSXAttribute) {
+    fixFun = (fixer: Rule.RuleFixer) => {
+      const { name } = node
+      return fixer.replaceText(node, name.name + '=' + '{' + TemplateCode + '}')
+    }
+  }
   context.report({ node, message: '替换为:' + TemplateCode, fix: fixFun })
 }
 // i18n模板代码

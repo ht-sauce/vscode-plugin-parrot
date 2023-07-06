@@ -8,6 +8,7 @@ import { unmatchedIdentifier } from '../../tool/string'
 import { replaceText } from './replace'
 import { FileType, ReplaceType } from '../../store/types'
 import { globalStatus } from '../../store/global-status'
+import type { JSXText, Literal } from '@typescript-eslint/types/dist/generated/ast-spec'
 
 export const meta = {
   name: 'eslint-plugin-parrot',
@@ -40,7 +41,7 @@ export default {
         schema: [],
       },
       create(context: Rule.RuleContext): Rule.RuleListener {
-        // console.log(1111, context.parserServices)
+        console.log(1111, context.parserServices)
         // 原始ast方式
         // return {
         //   // 在ReturnStatement节点上
@@ -136,23 +137,47 @@ export default {
             Literal(node: Rule.Node): void {
               // console.log(node)
               const parent = node?.parent as ESTree.CallExpression
-              if (parent && parent.type === ASTType.CallExpression) {
-                if (
-                  parent.callee.type === ASTType.MemberExpression &&
-                  unmatchedIdentifier((parent.callee.property as PrivateIdentifier).name)
-                )
-                  return
+              switch (parent.type as string) {
+                case ASTType.JSXAttribute: {
+                  const entryStatus = entryWordBar((node as ESTree.Literal).value as string)
+                  // 父级节点需要改为冒号方式，传递父节点
+                  replaceText({
+                    node: node.parent,
+                    entryStatus,
+                    context,
+                    replaceType: ReplaceType.js,
+                  })
+                  break
+                }
+                default: {
+                  if (parent && parent.type === ASTType.CallExpression) {
+                    if (
+                      parent.callee.type === ASTType.MemberExpression &&
+                      unmatchedIdentifier((parent.callee.property as PrivateIdentifier).name)
+                    )
+                      return
+                  }
+                  const entryStatus = entryWordBar((node as ESTree.Literal).value as string)
+                  const { fileType } = globalStatus
+                  // 默认为js文件处理方式
+                  let replaceType = ReplaceType.js
+                  // 不同文件下的判断处理
+                  if (fileType === FileType.vue) replaceType = ReplaceType.vueOptions
+                  replaceText({ node, entryStatus, context, replaceType })
+                }
               }
-              const entryStatus = entryWordBar((node as ESTree.Literal).value as string)
-              const { fileType } = globalStatus
-              // 默认为js文件处理方式
-              let replaceType = ReplaceType.js
-              // 不同文件下的判断处理
-              if (fileType === FileType.vue) replaceType = ReplaceType.vueOptions
-              replaceText({ node, entryStatus, context, replaceType })
             },
             TemplateElement(node: ESTree.TemplateElement) {
               const entryStatus = entryWordBar(node.value.raw)
+              replaceText({
+                node,
+                entryStatus,
+                context,
+                replaceType: ReplaceType.js,
+              })
+            },
+            JSXText(node: JSXText) {
+              const entryStatus = entryWordBar(node.value)
               replaceText({
                 node,
                 entryStatus,

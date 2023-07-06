@@ -27,4 +27,8 @@ export enum ASTType {
   VText = 'VText',
   // vue html属性
   VAttribute = 'VAttribute',
+  // jsx純文字
+  JSXText = 'JSXText',
+  // jsx屬性
+  JSXAttribute = 'JSXAttribute',
 }

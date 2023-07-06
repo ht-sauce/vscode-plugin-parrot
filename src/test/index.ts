@@ -8,8 +8,7 @@ import { access, mkdir } from 'fs/promises'
 // 测试中文提取
 async function runAnalysisTest() {
   try {
-    const urlStr = join(resolve('.') + '/test-file/HeaderInfo.vue')
-    console.log(111, urlStr)
+    const urlStr = join(resolve('.') + '/test-file/index.vue')
     await analysis(urlStr)
 
     console.log(getWordBar().WordBarJson)
@@ -19,7 +18,7 @@ async function runAnalysisTest() {
     console.log(e)
   }
 }
-// runAnalysisTest()
+runAnalysisTest()
 
 // async function testFile() {
 //   const res = await readFile('d:/G/zl-project/nbs-pc/src/views/supplierSys/account/AddSupplier.vue')
@@ -36,4 +35,4 @@ async function testImportFile() {
   // fs.writeFile(url, '')
   console.log(res)
 }
-testImportFile()
+// testImportFile()
