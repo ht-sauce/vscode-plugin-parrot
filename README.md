@@ -45,7 +45,7 @@ module.exports = () => {
     }
 }
 ```
-#### 当i18n文件为json的时候利用unifiedFileName读取原词条特性
+### 当i18n文件为json的时候利用unifiedFileName读取原词条特性
 unifiedFileName文件存在的时候是会读取原文件内容的。
 
 所以在配置了i18nLang和unifiedFileName情况下直接实现提取的词条直接输出到目标文件下面，并且不会重复
