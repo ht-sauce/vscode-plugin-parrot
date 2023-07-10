@@ -6,8 +6,10 @@
 - npm run test-plugin vscode单元测试
 ## 发布
 请先安装npm install -g @vscode/vsce
+## 使用
+发布之后运行 npm run build
 
-npm run build
+会生成vscode-plugin-parrot-{版本文件}.vsix，请自行安装到本地vscode
 ## 功能
 ### 自定义配置表
 在项目根目录下面新增配置文件：parrot-config.js，配置文件可有可无
