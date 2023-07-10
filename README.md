@@ -5,6 +5,8 @@
 - F5 vscode测试
 - npm run test-plugin vscode单元测试
 ## 发布
+请先安装npm install -g @vscode/vsce
+
 npm run build
 ## 功能
 ### 自定义配置表
