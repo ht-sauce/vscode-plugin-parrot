@@ -32,6 +32,7 @@ export type Config = {
 以下为项目默认值
 ```typescript
 // 支持函数方式或者直接json
+// parrot-config.js
 module.exports = () => {
     return {
         // 输出到根目录下面
